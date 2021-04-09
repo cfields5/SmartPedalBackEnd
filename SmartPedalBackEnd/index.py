@@ -1,5 +1,16 @@
 # Flask-Restful API
 
+# echo
+# 	length
+# 	level
+# reverb
+# 	level
+# overdrive
+# 	level
+# wah
+# 	level
+# 0 - 10 (step = 1)
+
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 from marshmallow import Schema, fields
@@ -8,9 +19,9 @@ app = Flask(__name__)
 api = Api(app)
 
 PEDALS = {
-    'pedal1': {'task': 'build an API'},
-    'pedal2': {'task': '?????'},
-    'pedal3': {'task': 'profit!'},
+    'pedal1': {'mainEffect': {'label': ''}},
+    'pedal2': {},
+    'pedal3': {},
 }
 
 
@@ -41,24 +52,24 @@ class Pedal(Resource):
         return task, 201
 
 
-# PedalList
-# shows a list of all pedals, and lets you POST to add new tasks
-class PedalList(Resource):
-    def get(self):
-        return PEDALS
+# # PedalList
+# # shows a list of all pedals, and lets you POST to add new tasks
+# class PedalList(Resource):
+#     def get(self):
+#         return PEDALS
 
-    def post(self):
-        args = parser.parse_args()
-        pedal_id = int(max(PEDALS.keys()).lstrip('pedal')) + 1
-        pedal_id = 'pedal%i' % pedal_id
-        PEDALS[pedal_id] = {'task': args['task']}
-        return PEDALS[pedal_id], 201
+#     def post(self):
+#         args = parser.parse_args()
+#         pedal_id = int(max(PEDALS.keys()).lstrip('pedal')) + 1
+#         pedal_id = 'pedal%i' % pedal_id
+#         PEDALS[pedal_id] = {'task': args['task']}
+#         return PEDALS[pedal_id], 201
 
 ##
 ## Actually setup the Api resource routing here
 ##
-api.add_resource(PedalList, '/pedals')
-api.add_resource(Pedal, '/pedals/<pedal_id>')
+# api.add_resource(PedalList, '/pedals')
+api.add_resource(Pedal, '/')
 
 
 if __name__ == '__main__':
